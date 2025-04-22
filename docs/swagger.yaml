@@ -1,0 +1,72 @@
+basePath: /api/v1
+definitions:
+  entity.Address:
+    properties:
+      cep:
+        type: string
+      city:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+      state:
+        type: string
+      street:
+        type: string
+    type: object
+host: localhost:8070
+info:
+  contact:
+    email: support@example.com
+    name: API Support
+    url: http://www.example.com/support
+  description: API para obter coordenadas geográficas (latitude e longitude) a partir
+    de um CEP brasileiro
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: CEP Geolocalização API
+  version: "1.0"
+paths:
+  /cep/{cep}:
+    get:
+      consumes:
+      - application/json
+      description: Retorna a latitude e longitude de um endereço a partir do CEP informado
+      parameters:
+      - description: CEP (apenas números ou formato 00000-000)
+        in: path
+        name: cep
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Address'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Obtém coordenadas geográficas a partir de um CEP
+      tags:
+      - endereços
+swagger: "2.0"
